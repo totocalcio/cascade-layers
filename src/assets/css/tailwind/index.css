@@ -1,0 +1,42 @@
+@layer base, component, utility;
+
+@import "./base.css" layer(base);
+@import "./component.css" layer(component);
+@import "./utility.css" layer(utility);
+
+@layer {
+  .wrapper {
+    * {
+      all: revert-layer !important;
+    }
+  }
+}
+
+/*
+ * @link https://developer.mozilla.org/ja/docs/Web/CSS/Guides/Cascade/Introduction#%E4%BD%9C%E6%88%90%E8%80%85%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB_%E3%82%A4%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%80%81%E3%83%AC%E3%82%A4%E3%83%A4%E3%83%BC%E3%80%81%E5%84%AA%E5%85%88%E5%BA%A6
+ * この無名レイヤーでは all: revert-layer !important を指定している。
+ *
+ * !important が付くと、レイヤー評価は通常時と逆転し、
+ * unlayered（style.css）は最も弱い扱いになる。
+ *
+ * revert を使うとスタイル全体が無効化され UA まで戻ってしまうため、revert-layer を使用する。
+ * revert-layer は直前のレイヤー、今回はutilityへロールバックする。
+ *
+ * ■ 通常（!important なし）の評価順（5の方が強い）
+ * 1. base
+ * 2. component
+ * 3. utility
+ * 4. <anonymous>
+ * 5. unlayered（style.css）
+ *
+ * ■ !important 時の評価順（5の方が強い）
+ * 1. unlayered
+ * 2. <anonymous>
+ * 3. utility
+ * 4. component
+ * 5. base
+ *
+ * <anonymous> レイヤーの revert-layer !important により
+ * unlayered(style.css)は評価対象から外れ、
+ * .wrapper 内では layerのスタイルが最終的に適用される。
+ */

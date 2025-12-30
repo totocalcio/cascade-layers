@@ -1,0 +1,11 @@
+.m-1 {
+  margin: 1rem;
+}
+
+.outline {
+  outline: 1px solid blue;
+}
+
+.outline-offset {
+  outline-offset: 4px;
+}
